@@ -1,6 +1,8 @@
 # PyNessusScript
 This script communicates with the Nessus API in an attempt to help with automating scans. Depending on flag issued with the script, you can list all scans, list all policies, start, stop, pause, and resume a scan.
 
+Please feel free to use and modify this code; it works for our purposes but may not work perfectly for yours. Any suggestions or improvements are highly encouraged.
+
 
 # Dependencies
 Requires python version 2.x and "requests" module to be installed.
