@@ -4,7 +4,7 @@ This script communicates with the Nessus API in an attempt to help with automati
 
 # Start & Help
 > python pyNessusScript.py
-or
+
 > python pyNessusScript.py -h
 
 Both will run the help menu and display a list of options.
