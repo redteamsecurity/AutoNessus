@@ -16,12 +16,15 @@ This script authenticates to the Nessus server when supplying any other flag tha
 
 # Example
 > python pyNessusScript.py -l
+
 List all scans and scan IDs (scan IDs to be used with other flags)
   
 > python pyNessusScript.py -sS 42
+
 Starts scan 42
 
 > python pyNessusScript.py --pause 42
+
 Pauses scan 42
 
 
