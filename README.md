@@ -34,3 +34,14 @@ Pause scan 42
 
 # Note
 If you would like to start an already completed scan (one with a "completed" status) you must add 'completed' to the list on line 272. This was done to ensure that scans would not re-run once completed.
+
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
