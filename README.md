@@ -3,9 +3,9 @@ This script communicates with the Nessus API in an attempt to help with automati
 
 
 # Start & Help
-python pyNessusScript.py
+> python pyNessusScript.py
 or
-python pyNessusScript.py -h
+> python pyNessusScript.py -h
 
 Both will run the help menu and display a list of options.
 
@@ -15,14 +15,14 @@ This script authenticates to the Nessus service when supplying any other flag th
 
 
 # Example
-python pyNessusScript.py -l
-  -List all scans and scan IDs (scan IDs to be used with other flags)
+> python pyNessusScript.py -l
+List all scans and scan IDs (scan IDs to be used with other flags)
   
-python pyNessusScript.py -sS 42
-  > Starts scan 42
+> python pyNessusScript.py -sS 42
+Starts scan 42
 
-python pyNessusScript.py --pause 42
-  > Pauses scan 42
+> python pyNessusScript.py --pause 42
+Pauses scan 42
 
 
 # Note
