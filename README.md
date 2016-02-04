@@ -11,7 +11,7 @@ Both will run the help menu and display a list of options.
 
 
 # Credentials
-This script authenticates to the Nessus service when supplying any other flag than -h. Correct URL and credentials must be placed on lines 52-56 of the script.
+This script authenticates to the Nessus server when supplying any other flag than -h. Correct URL and credentials must be placed on lines 52-56 of the script.
 
 
 # Example
