@@ -1,5 +1,5 @@
 # PyNessusScript
-This script communicates with the Nessus API in an attempt to help with automating scans. Depending on flag issued with the script, you can list all scans, list all policies, start, stop, pause, and resume a scan.
+This script communicates with the Nessus API in an attempt to help with automating scans. Depending on flag issued with the script, you can list all scans, list all policies, start, stop, pause, and resume a scan. It may be helpful to create a cron job/scheduled task for automating the start or pause of scans if the client has a desired testing window.
 
 Please feel free to use and modify this code; it works for our purposes but may not work perfectly for yours. Any suggestions or improvements are highly encouraged.
 
