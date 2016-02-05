@@ -1,4 +1,4 @@
-# PyNessusScript
+# AutoNessus
 This script communicates with the Nessus API in an attempt to help with automating scans. Depending on the flag issued with the script, you can list all scans, list all policies, start, stop, pause, and resume a scan. It may be helpful to create a cron job/scheduled task for automating the start or pause of scans if the client has a desired testing window.
 
 Please feel free to use and modify this code; it works for our purposes but may not work perfectly for yours. Any suggestions or improvements are highly encouraged.
@@ -9,9 +9,9 @@ Requires python version 2.x and "requests" module to be installed.
 Installation can be found here: http://docs.python-requests.org/en/latest/user/install/
 
 # Start & Help
-> python pyNessusScript.py
+> python autoNessus.py
 
-> python pyNessusScript.py -h
+> python autoNessus.py -h
 
 Both will run the help menu and display a list of options.
 
@@ -23,15 +23,15 @@ This script authenticates to the Nessus server when supplying any other flag tha
 # Examples
 List all scans and scan IDs (scan IDs to be used with other flags)
 
-> python pyNessusScript.py -l
+> python autoNessus.py -l
 
 Start scan 42
  
-> python pyNessusScript.py -sS 42
+> python autoNessus.py -sS 42
 
 Pause scan 42
 
-> python pyNessusScript.py --pause 42
+> python autoNessus --pause 42
 
 
 # Notes
