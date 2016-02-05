@@ -38,7 +38,7 @@ Pause scan 42
 If you would like to start an already completed scan (one with a "completed" status) you must add 'completed' to the list on line 272. This was done to ensure that scans would not re-run once completed.
 
 # Credits
-Thank you to Stephen Haywood for writing the example script that some of the functionality for this tool was taken from. The example script can be found here: https://github.com/averagesecurityguy/Nessus6/blob/master/nessus6_scan_demo.py
+Thank you to Stephen Haywood for writing the example script that some of the functionality for this tool used. The example script can be found here: https://github.com/averagesecurityguy/Nessus6/blob/master/nessus6_scan_demo.py
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
