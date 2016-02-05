@@ -5,14 +5,11 @@
 #  Used to control Nessus through      #
 #  scripting.                          #
 #                                      #
-#  Created by Matt Grandy              #
-#  Email: grandy[at]redteamsecure.com  #
-#                                      #
-#                                      #
 #  Requires Python 2.x and requests    #
 #  module                              #
 #                                      #
 #  Copyright (C) 2016 Matt Grandy      #
+#  Email: grandy[at]redteamsecure.com  #
 #                                      #
 ########################################
 
