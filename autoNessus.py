@@ -35,6 +35,7 @@ group = parser.add_mutually_exclusive_group()
 group.add_argument('-l', '--list', dest='scan_list', action='store_true', help='List current scans and IDs')
 group.add_argument('-p', '--policies', dest='policy_list', action='store_true', help='List current policies')
 group.add_argument('-sS', '--start', dest='start_scan_id', type=str, help='Start a specified scan using scan id')
+group.add_argument('-sR', '--resume', dest='resume_scan_id', type=str, help='Resume a specified scan using scan id')
 group.add_argument('-pS', '--pause', dest='pause_scan_id', type=str, help='Pause a specified scan using scan id')
 group.add_argument('-sP', '--stop', dest='stop_scan_id', type=str, help='Stop a specified scan using scan id')
 
@@ -138,11 +139,16 @@ def get_scans():
     Create a dictionary of scans and uuids
     """
 
+    status_dict = {}
+    name_dict = {}
     data = connect('GET', '/scans/')
-    status_dict = dict((p['name'], p['status']) for p in data['scans'])
-    id_dict = dict((b['name'], b['id']) for b in data['scans'])
+    for p in data['scans']:
+        status_dict[p['id']] = p['status']
+        name_dict[p['id']] = p['name']
+    #status_dict = dict((p['name'], p['status']) for p in data['scans'])
+    #id_dict = dict((b['name'], b['id']) for b in data['scans'])
 
-    return status_dict, id_dict
+    return status_dict, name_dict
 
 
 def get_history_ids(sid):
@@ -180,12 +186,12 @@ def get_status(sid):
     # Print out the scan status
 
     time.sleep(3) # sleep to allow nessus to process the previous status change
-    temp_status_dict, temp_id_dict = get_scans()
+    temp_status_dict, temp_name_dict = get_scans()
     print '\nScan Name           Status  '
     print '---------------------------------------'
-    for key, value in temp_id_dict.items():
-        if str(value) == str(sid):
-            create_menu(key, temp_status_dict[key], 'Null')
+    for key, value in temp_name_dict.items():
+        if str(key) == str(sid):
+            create_menu(value, temp_status_dict[key], 'Null')
 
 
 def launch(sid):
@@ -247,51 +253,69 @@ if __name__ == '__main__':
     elif args.scan_list:
         # If -l flag is specified, print the list of scans
 
-        temp_status_dict, temp_id_dict = get_scans()
+        temp_status_dict, temp_name_dict = get_scans()
         print 'Scan Name                  Status              ID'
         print '-------------------------------------------------'
 
-        for status_name,status in temp_status_dict.items():
-            for id_name, id in temp_id_dict.items():
-                if status_name == id_name:
-                    create_menu(status_name,status, id)
+        for status_id,status_value in temp_status_dict.items():
+            for name_id, name_value in temp_name_dict.items():
+                if status_id == name_id:
+                    create_menu(name_value,status_value, status_id)
 
 
 ###### Start the scan  #######
     if args.start_scan_id:
         # If -sS [scan_id] flag is passed, start the specified scan
         start_id = args.start_scan_id
-        temp_status_dict, temp_id_dict = get_scans()
+        temp_status_dict, temp_name_dict = get_scans()
 
         # Grab the status of the scan and either resume or start based on status
-        for key, value in temp_id_dict.items():
-            if str(value) == str(start_id):
-                if temp_status_dict[key].lower() in ['stopped', 'aborted', 'canceled', 'on demand', 'empty']:
+        for key, value in temp_name_dict.items():
+            if str(key) == str(start_id):
+                if temp_status_dict[key].lower() in ['stopped', 'completed' , 'aborted', 'canceled', 'on demand', 'empty']:
                     print('Launching Scan %s') %key
                     launch(start_id)
-
-                elif temp_status_dict[key].lower() in ['paused']:
-                    print('Resuming Scan %s') %key
-                    resume(start_id)
                 elif temp_status_dict[key].lower() in ['running']:
                     print('Scan already running!')
                     logout()
                 else:
-                    print('Scan completed or unable to start.')
+                    print('Scan already started or paused.')
                     print('If you need to start a previously completed scan, add "completed" to the list on line 269')
                     logout()
 
         # Re-grab the scans to get the updated status
         get_status(start_id)
 
+###### Resume the scan  #######
+    if args.resume_scan_id:
+        # If -sR [scan_id] flag is passed, start the specified scan
+        start_id = args.resume_scan_id
+        temp_status_dict, temp_name_dict = get_scans()
+
+        # Grab the status of the scan and either resume or start based on status
+        for key, value in temp_name_dict.items():
+            if str(key) == str(start_id):
+                if temp_status_dict[key].lower() in ['paused']:
+                    print('Resuming Scan %s') %key
+                    resume(start_id)
+                elif temp_status_dict[key].lower() in ['running']:
+                    print('Scan already running!')
+                    logout()
+                else:
+                    print('Scan unable to start.')
+                    print('If you need to start a previously completed scan, add "completed" to the list on line 269')
+                    logout()
+
+        # Re-grab the scans to get the updated status
+        get_status(start_id)
 
 ###### Pause the scan  #######
     elif args.pause_scan_id:
         # If -pS [scan_id] flag is passed, pause the specified scan
         pause_id = args.pause_scan_id
-        temp_status_dict, temp_id_dict = get_scans()
-        for key, value in temp_id_dict.items():
-            if str(value) == str(pause_id):
+        temp_status_dict, temp_name_dict = get_scans()
+        for key, value in temp_name_dict.items():
+            if str(key) == str(pause_id):
                 if temp_status_dict[key].lower() in ['paused']:
                     print('Scan already paused!')
                     logout()
@@ -310,9 +334,9 @@ if __name__ == '__main__':
         # If -sP [scan_id] flag is passed, stop the specified scan
 
         stop_id = args.stop_scan_id
-        temp_status_dict, temp_id_dict = get_scans()
-        for key, value in temp_id_dict.items():
-            if str(value) == str(stop_id):
+        temp_status_dict, temp_name_dict = get_scans()
+        for key, value in temp_name_dict.items():
+            if str(key) == str(stop_id):
                 if temp_status_dict[key].lower() in ['paused', 'running']:
                     print('Stopping Scan %s') %key
                     stop(stop_id)
